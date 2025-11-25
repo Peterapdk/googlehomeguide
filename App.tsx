@@ -22,15 +22,31 @@ const App: React.FC = () => {
         <div className="w-full max-w-4xl mx-auto space-y-12 animate-fade-in">
            {/* Hero Section */}
            <div className="text-center">
-            <div className="relative inline-block group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-100 to-purple-50 rounded-full blur-2xl opacity-70 -z-10 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <img 
-                src="https://lh3.googleusercontent.com/vbhJTUEukklYZIHizWZTdxTfcn6X65TnOveHQ_CMvUZ5JIBBFTWT3E9axgFGqclV74A=w500" 
-                alt="Google Home Mini" 
-                className="w-48 h-48 md:w-64 md:h-64 object-contain mx-auto drop-shadow-xl transform hover:scale-105 transition-transform duration-500"
-              />
+            <div className="relative inline-block group mb-4">
+              {/* Soft glow background */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-100 via-purple-50 to-white rounded-full blur-3xl opacity-60 -z-10 group-hover:opacity-80 transition-opacity duration-700"></div>
+              
+              {/* Image Container */}
+              <div className="bg-white p-8 rounded-full shadow-xl inline-flex items-center justify-center w-64 h-64 border-4 border-white ring-1 ring-gray-100">
+                <img 
+                  src="https://lh3.googleusercontent.com/vbhJTUEukklYZIHizWZTdxTfcn6X65TnOveHQ_CMvUZ5JIBBFTWT3E9axgFGqclV74A=w500" 
+                  alt="Google Home Smart Speaker" 
+                  className="w-full h-full object-contain transform hover:scale-105 transition-transform duration-500"
+                />
+              </div>
             </div>
-            <h2 className="mt-6 text-3xl font-bold text-gray-900">Velkommen til din Google Home</h2>
+
+            {/* Personal Thank You Note */}
+            <div className="mb-8 transform -rotate-1 mt-6">
+              <p className="font-handwriting text-3xl md:text-4xl text-gray-700">
+                Tak for købet af Google Home..
+              </p>
+              <p className="font-handwriting text-xl md:text-2xl text-gray-500 mt-1">
+                / Charlotte og Peter
+              </p>
+            </div>
+
+            <h2 className="mt-6 text-3xl font-bold text-gray-900">Velkommen til din nye assistent</h2>
             <p className="mt-2 text-gray-500 text-lg">Hvad vil du gerne gøre i dag?</p>
           </div>
 
@@ -131,7 +147,7 @@ const App: React.FC = () => {
 
         {/* Info Footer */}
         <div className="mt-12 text-center text-gray-400 text-sm">
-          <p>© 2024 Uofficiel Guide. Billeder tilhører Google.</p>
+          <p>© 2024 Uofficiel Guide.</p>
         </div>
       </main>
 
