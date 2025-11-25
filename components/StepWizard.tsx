@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Step, QuizOption } from '../types';
-import { INSTALLATION_STEPS } from '../data/steps';
 import { ProgressBar } from './ProgressBar';
 import { Icon } from './Icon';
 
-export const StepWizard: React.FC = () => {
+interface StepWizardProps {
+  steps: Step[];
+  onComplete: () => void;
+}
+
+export const StepWizard: React.FC<StepWizardProps> = ({ steps, onComplete }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [quizAnswer, setQuizAnswer] = useState<QuizOption | null>(null);
 
-  const currentStep = INSTALLATION_STEPS[currentStepIndex];
+  // Safety check if steps prop changes
+  useEffect(() => {
+    setCurrentStepIndex(0);
+    setCompletedSteps([]);
+    setQuizAnswer(null);
+  }, [steps]);
+
+  const currentStep = steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
-  const isLastStep = currentStepIndex === INSTALLATION_STEPS.length - 1;
+  const isLastStep = currentStepIndex === steps.length - 1;
   const isStepCompleted = completedSteps.includes(currentStep.id);
 
   const handleNext = () => {
-    if (currentStepIndex < INSTALLATION_STEPS.length - 1) {
+    if (currentStepIndex < steps.length - 1) {
       setCurrentStepIndex(prev => prev + 1);
       setQuizAnswer(null); // Reset quiz for next step
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -43,12 +54,14 @@ export const StepWizard: React.FC = () => {
     }
   };
 
+  if (!currentStep) return <div>Indlæser trin...</div>;
+
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 md:p-10 max-w-2xl w-full mx-auto border border-gray-100">
       
       {/* Header Area */}
       <div className="mb-8">
-        <ProgressBar totalSteps={INSTALLATION_STEPS.length} currentStep={currentStepIndex} />
+        <ProgressBar totalSteps={steps.length} currentStep={currentStepIndex} />
         <div className="flex items-center gap-4 mb-2">
           <div className="p-3 bg-blue-100 rounded-full text-blue-600">
             <Icon name={currentStep.icon} className="w-8 h-8" />
@@ -132,7 +145,7 @@ export const StepWizard: React.FC = () => {
         {isLastStep ? (
           <button
             className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-green-200 transition-all transform hover:scale-105"
-            onClick={() => alert("Tillykke! Din Google Home er nu klar til brug.")}
+            onClick={onComplete}
           >
             Færdig!
           </button>
